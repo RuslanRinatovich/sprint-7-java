@@ -3,19 +3,34 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Practicum {
+
+
     public static void main(String[] args) {
 
-       System.out.println(numberOfRepeats("раз два три, раз два три", "раз")); // вернёт 2
-        System.out.println(numberOfRepeats("Hello, world!", "goodbye")); // вернёт 0);
+        System.out.println(numberOfRepeats2("раз два раз два три раз", "раз"));
+        System.out.println(numberOfRepeats2("рeаз два рeаз два три раeз", "раз"));
+    }
 
+    public String capitalize(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
+
+    public String fixText(String text) {
+        // Реализуйте этот метод
+
+        text = text.replace("„", "«").replace("“", "»").replace("цевилизаций", "цивилизаций");
+        text = text.trim();
+        return capitalize(text);
     }
 
     public static boolean startsWith(String initial, String other) {
         return other.indexOf(initial) == 0;
     }
+
     public static boolean endsWith(String initial, String other) {
         return initial.lastIndexOf(other) + other.length() == initial.length();
     }
+
     // консольный интерфейс для управления программой
     public static void printMenu() {
         System.out.println("Что вы хотите сделать? ");
@@ -30,6 +45,7 @@ public class Practicum {
             return "Вы ничего не ввели!";
         return str.trim();
     }
+
     private boolean isCapsLock = false;
 
     public void capsLock() {
@@ -45,20 +61,34 @@ public class Practicum {
             System.out.print(str.toLowerCase());
     }
 
-    public static int numberOfRepeats(String text, String substring)
-    {
+    public static int numberOfRepeats(String text, String substring) {
         int count = 0;
-        while (text.contains(substring))
-        {
+        while (text.contains(substring)) {
             int start = text.indexOf(substring) + substring.length();
             text = text.substring(start);
             count++;
         }
         return count;
     }
+    public static int numberOfRepeats2(String text, String substring) {
+        int count = 0;
+        StringBuilder str = new StringBuilder(text);
+        while (str.indexOf(substring) != -1) {
+            int start = str.indexOf(substring);
+            str.delete(0, start + substring.length());
+            count++;
+        }
+        return count;
+    }
 
-    public static String capitalize(String str) {
-        return str.substring(0,1).toUpperCase() + str.substring(1);
+    public boolean isPalindromeWord(String str) {
+        StringBuilder stringBuilder = new StringBuilder(str.toLowerCase());
+        while (stringBuilder.indexOf(" ") != -1)
+        {
+            stringBuilder.deleteCharAt(stringBuilder.indexOf(" "));
+        }
+        str = stringBuilder.toString();
+        return str.contentEquals(stringBuilder.reverse());
     }
 
 }
